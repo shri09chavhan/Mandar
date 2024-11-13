@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jarvis AI Assistant</title>
+  <style>
+    body {
+      background-color: black;
+    }
+
+    .tan {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-wrap: wrap;
+    }
+
+    #s {
+      width: 350px;
+      height: 350px;
+    }
+
+    h1 {
+      font-family: orbitron;
+      color: rebeccapurple
+    }
+
+    #t {
+      font-family: orbitron;
+      color: rebeccapurple;
+    }
+
+    #output {
+      font-family: orbitron;
+      color: rebeccapurple;
+    }
+
+    .sec {
+      height: 200px: margin: 2px;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-wrap: wrap;
+    }
+
+    #p {
+      font-family: orbitron;
+      color: rebeccapurple;
+      padding-top: 0px;
+      margin-bottom: 20px;
+    }
+
+    #hi {
+      font-family: orbitron;
+      color: rebeccapurple;
+    }
+
+    .white {
+      color: white;
+      padding: 0px;
+      margin: 0px;
+    }
+
+    .btn {
+      justify-self: center;
+      align-self: center;
+      margin-top: 35px;
+      margin-left: 71px;
+      margin-bottom: 20px;
+      height: 30px;
+      width: 90px;
+      font-family: orbitron;
+    }
+
+    #results p {
+
+      font-family: orbitron;
+      color: white;
+
+    }
+
+    #results a {
+      font-family: roboto;
+      text-decoration: none;
+      color: cadetblue;
+    }
+
+    .tt {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+
+<body>
+  <div class="tan">
+    <h1>Jarvis AI Assistant</h1>
+    <img id="s" src="https://i.im.ge/2024/11/06/kp5ryz.1000008326.png">
+
+    <p id="output"></p>
+  </div>
+  <div class="sec">
+    <div class="d">
+      <p id="t"></p>
+      <p id="p"></p>
+    </div>
+
+  </div>
+  <div id="hi">
+    <p class="white">Disclaimer:</p> The jarvis AI assistant is under progress this is beta version ,if any problem occurred please <a class="white" href="mailto:thecoder920@gmail.com?subject=Prefilled%20Subject&body=This%20is%20a%20prefilled%20body%20text">Click here</a>OR Just say <p class="white">I have complaint of you</p>to JARVIS
+  </div>
+  <a class="btn" href="https://docs.google.com/document/d/1gS1YEpmm5dqXtzhCLJZkZDe-3atnMbUfRFaLufHJpcM/edit?usp=drivesdk"><button class="btn">HELP?</button></a>
+
+  <div id="results">
+    <div class="tt">
+      <a href="https://docs.google.com/document/d/15g1elowCDLKuMf9KAqjSkYwoAg2XJ7Finx98VLAJnuw/edit?usp=drivesdk">Terms and Conditions</a>
+      <a href="https://docs.google.com/document/d/1loAHpwlF6JWPS5LeZrwJUOYJh7ijoxhNfWvDkaObnSs/edit?usp=drivesdk">privacy and Policy </a>
+    </div>
+
+  </div>
+  <script>
+    const loc = document.getElementById('p');
+    const time = document.getElementById('t');
+
+    function shree() {
+      const ti = new Date().toLocaleTimeString();
+      time.innerText = `Time ${ti}`
+    }
+    shree()
+
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          loc.innerText = "Latitude:", latitude;
+          loc.innerText = "Longitude:", longitude;
+        },
+        (error) => {
+          loc.innerText = `Error in getting location ${error.message}`;
+        }
+      );
+    } else {
+      loc.innerText = "Geolocation is not supported by this browser.";
+    }
+    const apiKey = 'AIzaSyDE2By2VRR4hqvxPmasoebT7lM6lWQ05JM'; // Replace with your API key
+    const cx = '459b0465f7f354ba1'; // Replace with your Custom Search Engine ID
+    function displayResults(items) {
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = ""; // Clear previous results
+
+      if (!items) {
+        resultsDiv.innerHTML = "<p>No results found.</p>";
+        return;
+      }
+
+      items.forEach(item => {
+        const result = document.createElement("div");
+        result.classList.add("result");
+
+        const title = document.createElement("a");
+        title.href = item.link;
+        title.textContent = item.title;
+        title.target = "_blank";
+
+        const snippet = document.createElement("p");
+        snippet.textContent = item.snippet;
+
+        const hr = document.createElement("hr");
+
+
+        result.appendChild(title);
+        result.appendChild(snippet);
+        resultsDiv.appendChild(result);
+        resultsDiv.appendChild(hr);
+      });
+    }
+
+    // Disable right-click
+    document.addEventListener("contextmenu", (event) => event.preventDefault());
+
+    // Disable F12, Ctrl+Shift+I, Ctrl+U (view source)
+    document.addEventListener("keydown", (event) => {
+      if (
+        event.key === "F12" ||
+        (event.ctrlKey && event.shiftKey && event.key === "I") ||
+        (event.ctrlKey && event.key === "U")
+      ) {
+        event.preventDefault();
+      }
+    });
+
+    // Initialize speech synthesis
+    const speak = (text) => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(utterance);
+    };
+
+    // Check if speech recognition is supported
+    if (!("webkitSpeechRecognition" in window)) {
+      output.innerText = "Speech Recognition is not supported in this browser.";
+    } else {
+      const recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = "en-IN";
+
+      recognition.onstart = () => {
+        output.innerText = "Listening...";
+      };
+
+      recognition.onresult = (event) => {
+        const command = event.results[0][0].transcript.toLowerCase();
+        output.innerText = `You said: ${command}`;
+        respondToCommand(command);
+      };
+
+      recognition.onerror = (event) => {
+        output.innerText = `Error occurred: ${event.error}`;
+      };
+
+      recognition.onend = () => {
+        output.innerText = "Click 'Start Listening' to speak again.";
+      };
+
+      // Function to start listening
+      document.getElementById('s').addEventListener('click', () => {
+        recognition.start();
+      });
+
+      // Function to respond to commands
+      const respondToCommand = (command) => {
+        if (command.includes("time")) {
+          const currentTime = new Date().toLocaleTimeString();
+          speak(`The time is ${currentTime}`);
+        } else if (command.includes("date")) {
+          const currentDate = new Date().toLocaleDateString();
+          speak(`Today's date is ${currentDate}`);
+        } else if (command.includes("open google")) {
+          window.open("https://www.google.com", "_blank");
+          speak("Opening Google");
+        } else if (command.includes("hello")) {
+          speak("Hello! How can I assist you?");
+        } else if (command.includes("exit")) {
+          speak("Goodbye!");
+          window.close();
+        } else if (command.includes("open youtube")) {
+          window.location.href = "youtube://";
+          window.open("https://youtube.com")
+        } else if (command.includes("search")) {
+          const query = command.replace("search", "").trim();
+
+          function search() {
+
+            const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(query)}`;
+
+            fetch(url)
+              .then(response => response.json())
+              .then(data => displayResults(data.items))
+              .catch(error => console.error('Error:', error));
+          }
+          search();
+
+          speak(`Searching for ${query} on JARVIS search Engine,scroll down to see search results`);
+          console.log(`Searching for: ${query}`);
+        } else if (command.includes("play") && command.includes("youtube")) {
+          let query = command.replace("play", "").trim();
+          query = command.replace("youtube", "");
+          const ytSearchUrl = `https://m.youtube.com/results?sp=mAEA&search_query=${encodeURIComponent(query)}`;
+          window.open(ytSearchUrl, "_blank");
+          speak(`Searching for ${query} on youtube`);
+          console.log(`Searching for: ${query}`);
+        } else if (command.includes("send emergency message")) {
+          window.location.href = "https://api.whatsapp.com/send?phone=7558782027&text=help https://maps.app.goo.gl/Ex1fGzPrrfqKsXoZ6";
+          window.Location.href = "https://api.whatsapp.com/send?phone=7387727333&text=help\nhttps://maps.app.goo.gl/Ex1fGzPrrfqKsXoZ6"
+        } else if (command.includes("open whatsapp")) {
+          window.location.href = "https://whatsapp.com";
+          speak('Opening whatsapp')
+        } else if (command.includes("open instagram")) {
+          window.location.href = "https://instagram.com";
+          speak('Opening instagram')
+        }
+        else if (command.includes("open facebook")) {
+          window.open("https://facebook.com");
+          speak("Opening facebook")
+        }
+        else if (command.includes("I have complaint of you")) {
+          window.location.href = "mailto:thecoder920@gmail.com?subject=Prefilled%20Subject&body=This%20is%20a%20prefilled%20body%20text"
+
+        } else if (command.includes("send email")) {
+          window.location.href = "mailto:?subject=Prefilled%20Subject&body=This%20is%20a%20prefilled%20body%20text"
+        }
+        else if (command.includes("open spotify")) {
+          window.open("https://spotify.com")
+        }
+        else if (command.includes("what is your name") || command.includes("who are you") || command.includes("who is your owner")) {
+          speak("I am JARVIS AI Assistant,I am created by sir Shrihari chavhan")
+        }
+        else {
+          speak("I'm not sure how to help with that, please ask this to my friend chat G.P.T.");
+          setTimeout((data) => {
+            window.open("https://chatgpt.com/")
+          }, 6000)
+          console.log("Opening Chatgpt")
+        }
+      };
+    }
+  </script>
+</body>
+
+</html>
